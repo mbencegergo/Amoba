@@ -11,28 +11,24 @@ using System.Reflection;
 
 namespace Game
 {
-    
-    public partial class GameMap : Form
-    {
-        int player;
-        const int x=3, y=3;
-        List<Area> areas = new List<Area>();
 
-        public GameMap()
-        {
+    public partial class GameMap : Form {
+       int player;
+        const int x = 3, y = 3;
+        List<Area> areas = new List<Area>();
+        Menu menu;
+
+        public GameMap() {
             player = 1;
             InitializeComponent();
             AreaDefinition(x, y);
             SetPictureBoxes(x, y);
         }
 
-        private void AreaDefinition(int x, int y)
-        {
+        private void AreaDefinition(int x, int y) {
             int i;
-            for (i = 0; i < x; i++)
-            {
-                for (int j = 0; j < y; j++)
-                {
+            for (i = 0; i < x; i++) {
+                for (int j = 0; j < y; j++) {
                     areas.Add(new Area());
                 }
             }
@@ -198,11 +194,11 @@ namespace Game
         {
             if(Winner=="X" || Winner == "O")
             {
-                Winner = "Congratulation Mr. " + Winner +"\n Reastart?";
+                Winner = "Congratulations Mr. " + Winner +"\nRestart?";
             }
             else
             {
-                Winner = "Tie Game\nRestart?";
+                Winner = "Tie!\nRestart?";
             }
             if (MessageBox.Show(Winner, "Game Over", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
@@ -210,8 +206,20 @@ namespace Game
             }
             else
             {
-                Application.Exit();
+                menu = new Menu();
+                this.Hide();
+                menu.Show();
             }
+        }
+
+        private void surrenderButton_Click(object sender, EventArgs e) {
+            menu = new Menu();
+            this.Hide();
+            menu.Show();
+        }
+
+        private void GameMap_FormClosed(object sender, FormClosedEventArgs e) {
+            Application.Exit();
         }
 
         private void Restart()

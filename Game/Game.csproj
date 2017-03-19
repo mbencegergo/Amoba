@@ -52,10 +52,28 @@
     <Compile Include="GameMap.Designer.cs">
       <DependentUpon>GameMap.cs</DependentUpon>
     </Compile>
+    <Compile Include="Login.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Login.Designer.cs">
+      <DependentUpon>Login.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Menu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Menu.Designer.cs">
+      <DependentUpon>Menu.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="GameMap.resx">
       <DependentUpon>GameMap.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Login.resx">
+      <DependentUpon>Login.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Menu.resx">
+      <DependentUpon>Menu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -81,28 +99,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="bin\Debug\O.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="bin\Debug\X.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\O2.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\X2.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\O.bmp" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\O.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\X.bmp" />
+    <None Include="Resources\X.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\X.png" />
+    <Folder Include="bin\Debug\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
