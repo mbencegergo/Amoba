@@ -17,9 +17,10 @@ namespace Game {
 
         GameMap gameMap;
         Login login;
+        HostWindow hostWindow;
 
         private void testButton_Click(object sender, EventArgs e) {
-            gameMap = new GameMap();
+            gameMap = new GameMap(3, 3);
             this.Hide();
             gameMap.Show();
         }
@@ -36,6 +37,12 @@ namespace Game {
 
         private void Menu_FormClosed(object sender, FormClosedEventArgs e) {
             Application.Exit();
+        }
+
+        private void hostButton_Click(object sender, EventArgs e) {
+            hostWindow = new HostWindow();
+            this.Hide();
+            hostWindow.Show();
         }
     }
 }

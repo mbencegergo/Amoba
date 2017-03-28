@@ -13,16 +13,20 @@ namespace Game
 {
 
     public partial class GameMap : Form {
-       int player;
-        const int x = 3, y = 3;
+        int player;
+        public int X { get; set; }
+        public int Y { get; set; }
+
         List<Area> areas = new List<Area>();
         Menu menu;
 
-        public GameMap() {
+        public GameMap(int x, int y) {
+            this.X = x;
+            this.Y = y;
             player = 1;
             InitializeComponent();
-            AreaDefinition(x, y);
-            SetPictureBoxes(x, y);
+            AreaDefinition(this.X, Y);
+            SetPictureBoxes(X, Y);
         }
 
         private void AreaDefinition(int x, int y) {
@@ -86,7 +90,7 @@ namespace Game
                 pctr.Image = Properties.Resources.O;
                 pctr.Tag = "O";
                 player = 2;
-                SearchWin("O", x, y);
+                SearchWin("O", X, Y);
                 Draw();
             }
             else if(player == 2 && pctr.Image == null)
@@ -94,7 +98,7 @@ namespace Game
                 pctr.Image = Properties.Resources.X;
                 pctr.Tag = "X";
                 player = 1;
-                SearchWin("X", x, y);
+                SearchWin("X", X, Y);
                 Draw();
             }
         }
