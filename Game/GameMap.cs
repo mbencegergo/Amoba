@@ -47,8 +47,8 @@ namespace Game
         {
             int koorX=200, koorY = 50, width, height;
             int j=1;
-            width =(int)(500 / x);
-            height = (int)(500 / y);
+            width =(int)(300 / x);
+            height = (int)(300 / y);
             foreach (Area item in areas)
             {
                 item.SetPictureBox(true,koorX,koorY,width,height);
@@ -105,7 +105,7 @@ namespace Game
                 pctr.Image = Properties.Resources.X;
                 pctr.Tag = "X";
                 player = 1;
-                if(!SearchWin("X", x, y))
+                if(!SearchWin("X", X, Y))
                 {
                     Draw();
                 }
