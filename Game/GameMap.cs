@@ -8,21 +8,30 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Reflection;
+using Leap;
+using System.Diagnostics;
+using System.Threading;
 
 namespace Game
 {
 
-    public partial class GameMap : Form {
-       int player;
-        const int x = 3, y = 3;
+    public partial class GameMap : Form
+    {
+        int player;
+        const int x = 9, y = 9;
+        public int Count { get; private set; }
         List<Area> areas = new List<Area>();
         Menu menu;
 
-        public GameMap() {
+        public GameMap()
+        {
             player = 1;
-            InitializeComponent();
+            Count = 4;
             AreaDefinition(x, y);
             SetPictureBoxes(x, y);
+
+
+            InitializeComponent();
         }
 
         private void AreaDefinition(int x, int y) {
@@ -36,8 +45,10 @@ namespace Game
 
         private void SetPictureBoxes(int x, int y)
         {
-            int koorX=200, koorY = 50, width=100, height=100;
+            int koorX=200, koorY = 50, width, height;
             int j=1;
+            width =(int)(500 / x);
+            height = (int)(500 / y);
             foreach (Area item in areas)
             {
                 item.SetPictureBox(true,koorX,koorY,width,height);
@@ -48,12 +59,12 @@ namespace Game
                
                 if (j % x == 0)
                 {
-                    koorY += 100;
+                    koorY += height;
                     koorX = 200;
                 }
                 else
                 {
-                    koorX += 100;
+                    koorX += width;
                 }
                 j++;
             }
@@ -94,83 +105,140 @@ namespace Game
                 pctr.Image = Properties.Resources.X;
                 pctr.Tag = "X";
                 player = 1;
-                SearchWin("X", x, y);
-                Draw();
+                if(!SearchWin("X", x, y))
+                {
+                    Draw();
+                }
             }
         }
 
-        private void SearchWin(string Tag, int x, int y)
+        private bool SearchWin(string Tag, int x, int y)
         {
-            int count = 3, countCheck = 0;
-            
-            for(int i = 0; i < (x * y); i++)
+            if (Horizontal(Tag, x, y))
             {
-                //vizszintes
-                countCheck = 0;
-                if ((string)areas[i].PicturBox.Tag == Tag && i % x == 0)
-                {
-                    countCheck += 1;
-                    for (int j = i + 1; j < i + count; j++)
-                    {
-                        if ((string)areas[j].PicturBox.Tag == Tag)
-                        {
-                            countCheck += 1;
-                        }
-                    }
-                    if (countCheck == count)
-                    {
-                        GameEnd(Tag);
-                        break;
-                    }
-                }
-
-                countCheck = 0;
-                //HIBÁÁÁÁÁÁÁÁSSSSSS!!!! szerintem 
-                //kereszt
-                for (int j = 0; j < x*y; j+=x+1)
-                    {
-                        if((string)areas[j].PicturBox.Tag == Tag)
-                        {
-                            countCheck += 1;
-                        }
-                    }
-                    if (countCheck == count)
-                    {
-                        GameEnd(Tag);
-                        break;
-                    }
-                countCheck = 0;
-                for (int j = count-1; j < x * y; j += x - 1)
-                {
-                    if ((string)areas[j].PicturBox.Tag == Tag)
-                    {
-                        countCheck += 1;
-                    }
-                    else { break; }
-                }
-                if (countCheck == count)
-                {
-                    GameEnd(Tag);
-                    break;
-                }
-
-                countCheck = 0;
-
-                    for (int j =i; j < x * y; j += y)
-                    {
-                        if ((string)areas[j].PicturBox.Tag == Tag)
-                        {
-                            countCheck += 1;
-                        }
-                    }
-                    if (countCheck == count)
-                    {
-                        GameEnd(Tag);
-                        break;
-                    
-                }
-                
+                return true;
             }
+            else if (Vertical(Tag, x, y))
+            {
+                return true;
+            }else if (AcrossPlus(Tag, x, y))
+            {
+                return true;
+            }else if (AcrossMinus(Tag, x, y))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private bool AcrossPlus(string tag, int x, int y)
+        {
+            int i, j, z, CountSearch=0;
+            
+            for(i=0; i <= y*x-(Count*x); i += x)
+            {
+                for (j = i; j <= i+(x-(Count-1)); j++)
+                {
+                    for (z = j; z < x * y; z += x + 1)
+                    {
+                        if ((string)areas[z].PicturBox.Tag == tag)
+                        {
+                            CountSearch++;
+                            if (CountSearch == Count)
+                            {
+                                GameEnd(tag);
+                                return true;
+                            }
+                        }
+                        else
+                        {
+                            CountSearch = 0;
+                            break;
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+
+        private bool AcrossMinus(string tag, int x, int y)
+        {
+            int i, j, z, CountSearch = 0;
+
+            for (i = 0; i <= y * x - (Count * x); i += x)
+            {
+                for (j = i+(Count-1); j <= i + x; j++)
+                {
+                    for (z = j; z < x * y; z += x - 1)
+                    {
+                        if ((string)areas[z].PicturBox.Tag == tag)
+                        {
+                            CountSearch++;
+                            if (CountSearch == Count)
+                            {
+                                GameEnd(tag);
+                                return true;
+                            }
+                        }
+                        else
+                        {
+                            CountSearch = 0;
+                            break;
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+
+        private bool Vertical(string tag, int x, int y)
+        {
+            int i,j, countSearch = 0;
+
+            for (i = 0; i < x * y - x * (Count - 1); i++)
+            {
+                countSearch = 0;
+                for (j = i; j < (i + Count * x); j += x)
+                {
+                    if ((string)areas[j].PicturBox.Tag == tag)
+                    {
+                        countSearch++;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                    if (countSearch == Count)
+                    {
+                        GameEnd(tag);
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        private bool Horizontal(string tag, int x, int y)
+        {
+            int i, countSearch=0;
+            for (i = 0; i < x * y; i++)
+            {
+                if (i % x == 0)
+                {
+                    countSearch = 0;
+                }
+                if ((string)areas[i].PicturBox.Tag == tag)
+                {
+                    countSearch++;
+                }
+                else { countSearch = 0; }
+                if (countSearch == Count)
+                {
+                    GameEnd(tag);
+                    return true;
+                }
+            }
+            return false;
         }
 
         void Draw()
@@ -231,4 +299,6 @@ namespace Game
             }
         }
     }
+
+
 }

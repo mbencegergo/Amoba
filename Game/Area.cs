@@ -25,6 +25,7 @@ namespace Game
             this.PicturBox.Size = new Size(width, height);
             this.PicturBox.BackColor = Color.White;
             this.PicturBox.BorderStyle = BorderStyle.Fixed3D;
+            this.PicturBox.SizeMode = PictureBoxSizeMode.Zoom;
         }
         
         
