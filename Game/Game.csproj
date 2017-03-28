@@ -55,6 +55,12 @@
     <Compile Include="GameMap.Designer.cs">
       <DependentUpon>GameMap.cs</DependentUpon>
     </Compile>
+    <Compile Include="HostWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HostWindow.Designer.cs">
+      <DependentUpon>HostWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Login.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -71,6 +77,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="GameMap.resx">
       <DependentUpon>GameMap.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HostWindow.resx">
+      <DependentUpon>HostWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Login.resx">
       <DependentUpon>Login.cs</DependentUpon>

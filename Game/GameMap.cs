@@ -15,23 +15,23 @@ using System.Threading;
 namespace Game
 {
 
-    public partial class GameMap : Form
-    {
+    public partial class GameMap : Form {
         int player;
-        const int x = 9, y = 9;
-        public int Count { get; private set; }
+        public int X { get; set; }
+        public int Y { get; set; }
+		public int Count { get; private set; }
+
         List<Area> areas = new List<Area>();
         Menu menu;
 
-        public GameMap()
-        {
+        public GameMap(int x, int y) {
+            this.X = x;
+            this.Y = y;
             player = 1;
             Count = 4;
-            AreaDefinition(x, y);
-            SetPictureBoxes(x, y);
-
-
             InitializeComponent();
+            AreaDefinition(this.X, Y);
+            SetPictureBoxes(X, Y);
         }
 
         private void AreaDefinition(int x, int y) {
@@ -97,7 +97,7 @@ namespace Game
                 pctr.Image = Properties.Resources.O;
                 pctr.Tag = "O";
                 player = 2;
-                SearchWin("O", x, y);
+                SearchWin("O", X, Y);
                 Draw();
             }
             else if(player == 2 && pctr.Image == null)

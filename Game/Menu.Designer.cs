@@ -50,6 +50,7 @@
             this.hostButton.TabIndex = 1;
             this.hostButton.Text = "Host Game";
             this.hostButton.UseVisualStyleBackColor = true;
+            this.hostButton.Click += new System.EventHandler(this.hostButton_Click);
             // 
             // exitButton
             // 
