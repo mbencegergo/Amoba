@@ -29,6 +29,7 @@
             this.joinButton = new System.Windows.Forms.Button();
             this.browserButton = new System.Windows.Forms.Button();
             this.logoutButton = new System.Windows.Forms.Button();
+            this.nameLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // testButton
@@ -90,11 +91,21 @@
             this.logoutButton.UseVisualStyleBackColor = true;
             this.logoutButton.Click += new System.EventHandler(this.logoutButton_Click);
             // 
+            // nameLabel
+            // 
+            this.nameLabel.AutoSize = true;
+            this.nameLabel.Location = new System.Drawing.Point(12, 12);
+            this.nameLabel.Name = "nameLabel";
+            this.nameLabel.Size = new System.Drawing.Size(68, 13);
+            this.nameLabel.TabIndex = 6;
+            this.nameLabel.Text = "Logged in as";
+            // 
             // Menu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(698, 418);
+            this.Controls.Add(this.nameLabel);
             this.Controls.Add(this.logoutButton);
             this.Controls.Add(this.browserButton);
             this.Controls.Add(this.joinButton);
@@ -105,7 +116,9 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Amoba";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Menu_FormClosed);
+            this.Load += new System.EventHandler(this.Menu_Load);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -117,5 +130,6 @@
         private System.Windows.Forms.Button joinButton;
         private System.Windows.Forms.Button browserButton;
         private System.Windows.Forms.Button logoutButton;
+        private System.Windows.Forms.Label nameLabel;
     }
 }

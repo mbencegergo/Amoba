@@ -8,7 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Reflection;
-using Leap;
 using System.Diagnostics;
 using System.Threading;
 

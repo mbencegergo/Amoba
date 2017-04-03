@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Net.Http;
+using Newtonsoft.Json;
 
 namespace Game {
     public partial class Login : Form {
@@ -16,13 +18,46 @@ namespace Game {
 
         Menu menu;
 
-        private void loginButton_Click(object sender, EventArgs e) {
-            if (usernameBox.Text == "admin" && passwordBox.Text == "admin") {
+        private static readonly HttpClient client = new HttpClient();
+        private static string HOST = "http://localhost:3333";
+
+        private async void loginButton_Click(object sender, EventArgs e) {
+            var values = new Dictionary<string, string>
+            {
+                { "username", usernameBox.Text },
+                { "password", passwordBox.Text }
+            };
+            var content = new FormUrlEncodedContent(values);
+            var response = await client.PostAsync(HOST + "/login", content);
+            var responseString = await response.Content.ReadAsStringAsync();
+            var msg = JsonConvert.DeserializeObject<Response>(responseString);
+            if(msg.msg == "OK") {
+                Response.Username = usernameBox.Text;
                 menu = new Menu();
                 this.Hide();
                 menu.Show();
-            } else if (usernameBox.Text != "admin" || passwordBox.Text != "admin") {
-                MessageBox.Show("Incorrect username/password!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            } else {
+                MessageBox.Show(msg.msg, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private async void registerButton_Click(object sender, EventArgs e) {
+            var values = new Dictionary<string, string>
+            {
+                { "username", usernameBox.Text },
+                { "password", passwordBox.Text }
+            };
+            var content = new FormUrlEncodedContent(values);
+            var response = await client.PostAsync(HOST + "/register", content);
+            var responseString = await response.Content.ReadAsStringAsync();
+            var msg = JsonConvert.DeserializeObject<Response>(responseString);
+            if (msg.msg == "OK") {
+                MessageBox.Show("Register successful!\nRegistered username: " + usernameBox.Text, "Register successful!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                usernameBox.Text = "";
+                passwordBox.Text = "";
+                usernameBox.Focus();
+            } else {
+                MessageBox.Show(msg.msg, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

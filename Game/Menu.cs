@@ -44,5 +44,9 @@ namespace Game {
             this.Hide();
             hostWindow.Show();
         }
+
+        private void Menu_Load(object sender, EventArgs e) {
+            nameLabel.Text = "Logged in as " + Response.Username + "!";
+        }
     }
 }
